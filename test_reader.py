@@ -1,4 +1,5 @@
 import os
+from multiprocessing import Queue
 
 import pytest
 
@@ -43,8 +44,9 @@ def test_reader_get_id_from_query(query_string, expected):
 
 
 def test_reader(make_temp_log):
-    r = Reader(make_temp_log, {})
+    q = Queue()
+    r = Reader(make_temp_log, q)
     r.start()
     expected = {'valid': {1525132800: {'create': 0, 'update': 0, 'delete': 1}},
                 'non_valid': {1525132800: {'create': 1, 'update': 0, 'delete': 1}}}
-    assert r.statistic == expected
+    assert q.get() == expected
