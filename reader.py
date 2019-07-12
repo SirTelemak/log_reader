@@ -4,7 +4,7 @@ import logging
 import multiprocessing
 import os
 import re
-from time import sleep
+
 LOGGER_FORMAT = '%(asctime)s %(message)s'
 logging.basicConfig(format=LOGGER_FORMAT, datefmt='[%H:%M:%S]')
 log = logging.getLogger(__name__)
@@ -88,7 +88,6 @@ class Reader:
         :return: None
         """
         log.info("Processing '{}'".format(self.filename))
-        sleep(2)
         for data in self.read_log():
             try:
                 self.process_query(data)
